@@ -1,0 +1,17 @@
+const express=require('express');
+const { upload } = require('../middleware/multer');
+const { addDoctor, getAll, adminLogin } = require('../controller/adminController');
+const { adminIsLoggedIn } = require('../middleware/adminLoggedIn');
+const { changeAvailability, login, editDoctor, authDoctor } = require('../controller/doctorController');
+const { getAllAppointments, getDoctorAppointments } = require('../controller/appointmentController');
+const { doctorIsLoggedIn } = require('../middleware/doctorLoggedIn');
+const router=express.Router();
+router.post("/addDoctor",upload.single("image"),addDoctor);
+router.get("/getAll",getAll);
+router.get("/allappointments",getAllAppointments);
+router.post("/changeAvailability",changeAvailability);
+router.post("/login",login);
+router.get("/appointmentsd/:doctorId",getDoctorAppointments);
+router.post("/editdoctor",upload.single("image"),editDoctor);
+router.get("/auth",doctorIsLoggedIn,authDoctor);
+module.exports=router;

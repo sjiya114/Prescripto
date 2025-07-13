@@ -1,0 +1,17 @@
+const express=require('express');
+const { upload } = require('../middleware/multer');
+const {login,register,getProfile, updateProfile, sendResetOtp, resetPassword}=require('../controller/userController');
+const { userIsLoggedIn } = require('../middleware/userLoggedIn');
+const { getAppointments, book, cancelAppointment, stripePayment } = require('../controller/appointmentController');
+const router=express.Router();
+router.post("/login",login);
+router.post("/signup",register);
+router.get("/auth",userIsLoggedIn,getProfile);
+router.post("/updateProfile",upload.single("image"),userIsLoggedIn,updateProfile);
+router.get("/getappointments/:userId",userIsLoggedIn,getAppointments);
+router.post("/bookappointments",book);
+router.post("/cancelappointment",userIsLoggedIn,cancelAppointment);
+router.post("/makepayment",userIsLoggedIn,stripePayment);
+router.post("/resetotp",sendResetOtp);
+router.post("/resetpassword",resetPassword);
+module.exports=router;
