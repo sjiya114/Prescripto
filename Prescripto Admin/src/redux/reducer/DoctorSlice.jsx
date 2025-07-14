@@ -3,7 +3,8 @@ const initialState={
     tokend:localStorage.getItem("tokend"),
     appointmentsd:[],
     docId:null,
-    doc:{}
+    doc:{},
+     dashdata:{}
 }
 
 export const DoctorSlice=createSlice({
@@ -38,12 +39,16 @@ export const DoctorSlice=createSlice({
           {
             state.doc=action.payload;
             localStorage.setItem("doc",action.payload);
-          }
+          },
+      doctorDash:(state,action)=>
+      {
+       state.dashdata=action.payload;
+      }
     }
 })
 
 export default DoctorSlice.reducer;
-export const {getDoctorAppointments,logout,login,editDoctor,authDoctor}=DoctorSlice.actions;
+export const {getDoctorAppointments,logout,login,editDoctor,authDoctor,doctorDash}=DoctorSlice.actions;
 
 
 

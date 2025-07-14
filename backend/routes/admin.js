@@ -1,7 +1,11 @@
 const express=require('express');
-const { getAll, adminLogin, authAdmin } = require('../controller/adminController');
+const { getAll, adminLogin, authAdmin, adminDashboard } = require('../controller/adminController');
+const { adminIsLoggedIn } = require('../middleware/adminLoggedIn');
+const { getAllAppointments } = require('../controller/appointmentController');
 const router=express.Router();
 router.get("/getAll",getAll);
 router.post("/login",adminLogin);
-router.post("/auth",authAdmin);
+router.get("/auth",adminIsLoggedIn,authAdmin);
+router.get("/allappointments",adminIsLoggedIn,getAllAppointments);
+router.get("/dashdata",adminIsLoggedIn,adminDashboard);
 module.exports=router;

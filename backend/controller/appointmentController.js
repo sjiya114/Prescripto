@@ -64,7 +64,9 @@ module.exports.getDoctorAppointments = async (req, res) => {
 //API to get list of all appointments
 module.exports.getAllAppointments = async (req, res) => {
     try {
+         console.log("step1 of appointment");
         const appointments = await appointment.find({}).populate("userId").populate("doctorId");
+        
         res.json({ success: true, appointments: appointments });
     } catch (error) {
         return res.json({ success: false, error: error.message });

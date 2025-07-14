@@ -9,10 +9,12 @@ module.exports.adminIsLoggedIn=async(req,res,next)=>
 
             return res.json({success:false,message:"error while accessing token"});
         }
-        const tkn=jwt.sign(process.env.ADMIN_EMAIL+process.env.ADMIN_PASSWORD,process.env.JWT_SECRET);
-        const match=jwt.verify(token,tkn);
-        if(match!=(process.env.ADMIN_EMAIL+process.env.ADMIN_PASSWORD))
-            return res.json({success:false,message:"error while logging admin"});
+        const decoded=jwt.verify(token,process.env.JWT_SECRET);
+         console.log("step2");
+        if(decoded.email!==process.env.ADMIN_EMAIL || decoded.password!==process.env.ADMIN_PASSWORD)
+        {
+               return res.json({success:false,message:"error while logging admin"});
+        }
         next();
     } catch (error) {
         res.json({success:false,error:error.message});

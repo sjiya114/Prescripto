@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { addDoctors, changeAvailability, changeRole, getAppointments, getDoctors } from '../reducer/AdminSlice';
-import { authDoctor, editDoctor, getDoctorAppointments } from '../reducer/DoctorSlice';
+import { authDoctor, doctorDash, editDoctor, getDoctorAppointments } from '../reducer/DoctorSlice';
 import { login } from '../reducer/DoctorSlice';
 import toast from 'react-hot-toast';
 import { logout } from '../reducer/DoctorSlice';
@@ -53,6 +53,7 @@ export const asyncEditDoctor=(formData)=>async(dispatch,getState)=>
     token: localStorage.getItem("tokend"),
   },
 });
+console.log(res.data);
    if(res.data.success)
    {
     dispatch(editDoctor(res.data.doctor));
@@ -66,7 +67,8 @@ export const asyncEditDoctor=(formData)=>async(dispatch,getState)=>
 }
 export const asyncGetAllAppointments=()=>async(dispatch,getState)=>
 {
-  const res=await axios.get("/doctor/allappointments",{
+  console.log(localStorage.getItem("tokena"));
+  const res=await axios.get("/admin/allappointments",{
   headers: {
     token: localStorage.getItem("tokena"),
   },
@@ -161,5 +163,22 @@ export const asyncAuthDoctor=(navigate)=>async(dispatch,getState)=>
     dispatch(logout());
     toast.error("error while authenticating user");
     navigate("/");
+}
+}
+export const asyncDoctorDashBoard=(docId)=>async(dispatch,getState)=>
+{
+try {
+  const res=await axios.get(`/doctor/dashdata/${docId}`,{
+  headers: {
+    token: localStorage.getItem("tokend"),
+  },
+});
+console.log(res.data);
+  if(res.data.success)
+  {
+    dispatch(doctorDash(res.data.dashData));
+  }
+} catch (error) {
+  toast.error("error while fetching dashboard data");
 }
 }

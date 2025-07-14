@@ -44,7 +44,10 @@ function EditProfile() {
         available: doc.available || false
       });
     }
-  }, [doc]);
+    else{
+     dispatch(asyncAuthDoctor(navigate));
+    }
+  }, []);
 
 
 
@@ -55,19 +58,19 @@ function EditProfile() {
     else
       setData({ ...data, [e.target.name]: e.target.value });
   }
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data.speciality);
     let formData = new FormData();
     formData.append("image", data.image);
     formData.append("name", data.name);
     formData.append("speciality", data.speciality);
-    formData.append("degree", data.education);
+    formData.append("degree", data.degree);
     formData.append("email", data.email);
     formData.append("line1", data.line1);
     formData.append("line2", data.line2);
     formData.append("experience", data.experience);
-    formData.append("description", data.about);
+    formData.append("description", data.description);
     formData.append("fees", data.fees);
     dispatch(asyncEditDoctor(formData));
   }
@@ -123,7 +126,7 @@ function EditProfile() {
           }
           {
             edit ? <>
-              <p className='flex flex-row  max-md:flex-col justify-between'><span>Description:</span> <input type='text' onChange={onChangeHandler} value={data.description} className='border-1 border-gray-600 px-2 py-1 rounded-lg' name='description' /></p>
+              <p className='flex flex-row  max-md:flex-col justify-between'><span>Description:</span>  <textarea onChange={onChangeHandler} value={data.description} name='description' className='border-1 px-2 py-1 border-gray-600 rounded-md' placeholder='write about yourself...'  row={5} cols={6} id=""></textarea></p>
             </> :
               <>
                 <p className='flex flex-row  max-md:flex-col justify-between'><span>Description:</span> <span>{data.description}</span></p>

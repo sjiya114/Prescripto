@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { changeRole } from '../reducer/AdminSlice';
-import { login } from '../reducer/AdminAuthSlice'
+import { adminDash, login } from '../reducer/AdminAuthSlice'
 import { logout } from '../reducer/AdminAuthSlice';
 axios.defaults.baseURL="http://localhost:5500";
 import toast from 'react-hot-toast';
@@ -46,5 +46,23 @@ export const asyncAuthAdmin=(navigate)=>async(dispatch,getState)=>
     dispatch(logout());
     toast.error("error while authenticating user");
     navigate("/");
+}
+}
+export const asyncAdminDashBoard=()=>async(dispatch,getState)=>
+{
+try {
+    console.log("hello ad");
+  const res=await axios.get("/admin/dashdata",{
+  headers: {
+    token: localStorage.getItem("tokena"),
+  },
+});
+console.log(res.data);
+if(res.data.success)
+  {
+    dispatch(adminDash(res.data.dashData));
+  }
+} catch (error) {
+  toast.error("error while fetching dashboard data");
 }
 }

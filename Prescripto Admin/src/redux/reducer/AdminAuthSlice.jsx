@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState={
     tokena:localStorage.getItem("tokena"),
+    dashdata:{}
 }
 export const AdminAuthSlice=createSlice({
     name:'adminAuth',
@@ -18,10 +19,14 @@ export const AdminAuthSlice=createSlice({
         state.tokena=null;
         localStorage.clear("tokena");
         localStorage.clear("admin");
-     }
+     },
+      adminDash:(state,action)=>
+      {
+        state.dashdata=action.payload
+      }
     }
 })
 export default AdminAuthSlice.reducer;
-export const {login,logout}=AdminAuthSlice.actions;
+export const {login,logout,adminDash}=AdminAuthSlice.actions;
 
 

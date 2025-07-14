@@ -3,6 +3,8 @@ const doctorModel=require('../model/doctor.js');
 const jwt=require('jsonwebtoken');
 const bcrypt=require('bcryptjs');
 const validator=require('validator');
+const user = require('../model/user.js');
+const appointment = require('../model/appointment.js');
 
 // API for adding doctor
 module.exports.addDoctor=async(req,res)=>
@@ -46,10 +48,9 @@ module.exports.adminLogin=async(req,res)=>
        
         const {email,password}=req.body; 
        
-        if(String(email)===process.env.ADMIN_EMAIL && String(password)===process.env.ADMIN_PASSWORD)
+        if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD)
         {
-            const token=jwt.sign(email+password,process.env.JWT_SECRET);
-            
+            const token=jwt.sign({email:email,password:password},process.env.JWT_SECRET);
             res.json({success:true,message:"Admin logged in successfully",token:token});
         }
     } catch (error) {
@@ -69,8 +70,25 @@ module.exports.getAll=async(req,res)=>
 module.exports.authAdmin=(req,res)=>
 {
     try {
-       res.json({success:true,doctor:req.admin}); 
+       res.json({success:true}); 
     } catch (error) {
         res.json({success:false,error:error.message});
+    }
+}
+module.exports.adminDashboard=async(req,res)=>
+{
+    try {
+        const doctors=await doctorModel.find({});
+        const users=await user.find({});
+        const appointments=await appointment.find({}).populate("userId").populate("doctorId");
+        const dashData={
+           doctors:doctors.length,
+           users:users.length,
+           appointments:appointments.length,
+           latestAppointments:appointments.reverse().slice(0,5)
+        }
+        res.json({success:true,dashData:dashData});
+    } catch (error) {
+        return res.json({success:false,error:error.message});
     }
 }

@@ -2,6 +2,8 @@ const doctorModel = require('../model/doctor')
 const jwt=require('jsonwebtoken');
 const validator=require('validator');
 const bcrypt=require('bcryptjs');
+const appointment = require('../model/appointment');
+const { default: mongoose } = require('mongoose');
 const generateToken=async function(email,id)
 {
    return jwt.sign({email,id},process.env.JWT_SECRET);
@@ -59,7 +61,7 @@ module.exports.editDoctor=async(req,res)=>
             const {name,email,speciality,degree,experience,line1,line2,description,fees}=req.body;
             
             const image=req.file;
-            await doctorModel.findOneAndUpdate({email:email},{ name:name,speciality:speciality,
+            let doc=await doctorModel.findOneAndUpdate({email:email},{ name:name,speciality:speciality,
             degree:degree,experience:experience,description:description,
             fees:fees,address:{line1:line1,line2:line2},
             });
@@ -67,13 +69,41 @@ module.exports.editDoctor=async(req,res)=>
            if(image){
             const upload=(await v2.uploader.upload(req.file.path)).secure_url;
             await Promise.all(upload);
-            
-            const user= await doctorModel.findByIdAndUpdate({_id:id},{image:upload},{new:true});
+             doc= await doctorModel.findByIdAndUpdate({_id:id},{image:upload},{new:true});
            }
            
-           res.json({success:true,message:"profile updated successully",user:user});
+           res.json({success:true,message:"profile updated successully",doctor:doc});
     
         } catch (error) {
             return res.json({success:false,error:error.message});
         }
     }
+module.exports.doctorDashboard=async(req,res)=>
+{
+  try {
+    const {docId}=req.params;
+    const appointments=await appointment.find({doctorId:new mongoose.Types.ObjectId(docId)}).populate("userId").populate("doctorId");
+    let earning=0;
+    appointments.map((appoint)=>
+    {
+        if(appoint.isCompleted || appoint.payment)
+            earning+=appoint.amount;
+    })
+    let patients=[];
+    appointments.map((item)=>
+    {
+      if(!patients.includes(item.userId))
+        patients.push(item.userId);
+    });
+    const dashData={
+        earning:earning,
+        appointments:appointments.length,
+        patients:patients.length,
+        latestAppointments:appointments.reverse().slice(0,5)
+    }
+    res.json({success:true,dashData:dashData});
+
+  } catch (error) {
+    return res.json({success:false,error:error.message});
+  }  
+}

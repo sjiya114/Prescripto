@@ -7,7 +7,7 @@ const {v2} =require('cloudinary');
 const { transporter } = require('../config/nodemailer');
 const generateToken=async function(email,id)
 {
-   return await jwt.sign({email,id},process.env.JWT_SECRET);
+   return jwt.sign({email,id},process.env.JWT_SECRET);
 }
 
 //API for user registration
@@ -47,7 +47,7 @@ module.exports.login=async(req,res)=>
             if(!match)
                  return res.json({success:false,message:"matching user or password not found"}); 
             const token=await generateToken(email,decodeduser._id);
-            console.log("tt: "+token);
+            
             res.json({success:true,message:"logged in successfully",user:decodeduser,token:token});
         } catch (error) {
             res.json({success:false,error:error.message});

@@ -15,10 +15,12 @@ function AllAppointments() {
       },[]);
   useEffect(()=>
   {
+  if(!appointments || appointments.length===0){
   dispatch(asyncGetAllAppointments());
-  },[dispatch])
-  return (
-    <div className='mt-30 mx-4'>
+  }
+  },[dispatch,appointments])
+  return appointments.length>0?(
+     <div className='mt-30 mx-4'>
        <h1 className='font-serif my-2 font-semibold text-2xl'>Appointments</h1>
        <table className='border-2 border-gray-400 bg-white'>
         <thead>
@@ -32,19 +34,22 @@ function AllAppointments() {
                 <td className='px-16 py-2 font-bold'>Actions</td>
             </tr>
         </thead>
-       {appointments.map((appoint,index)=>( <tbody>
+       {appointments.map((appoint,index)=>( <tbody key={index+"k"} >
           <tr className='max-md:grid-cols-3  grid grid-cols-7'>
-               <td className='px-16 py-2'>{index+1}</td>
-                <td className='px-16 py-2'>{appoint.userId.name}</td>
-                <td className='px-16 py-2'>{appoint.userId.age}</td>
-                <td className='px-16 py-2'>{appoint.date}</td>
-                <td className='px-16 py-2'>{appoint.doctorId.name}</td>
-                <td className='px-16 py-2'>{appoint.amount}</td>
-                <td className='px-16 py-2'>{appoint.payment?"Paid":"Unpaid"}</td> 
+               <td className='px-16 py-2'>{index}</td>
+                <td className='px-16 py-2'>{appoint?.userId?.name}</td>
+                <td className='px-16 py-2'>{appoint?.userId?.age}</td>
+                <td className='px-16 py-2'>{appoint?.date}</td>
+                <td className='px-16 py-2'>{appoint?.doctorId?.name}</td>
+                <td className='px-16 py-2'>{appoint?.amount}</td>
+                <td className='px-16 py-2'>{appoint?.payment?"Paid":"Unpaid"}</td> 
             </tr>
         </tbody>))}
        </table>
     </div>
+  ):
+  (
+     <h1>Error while loading data</h1>
   )
 }
 
