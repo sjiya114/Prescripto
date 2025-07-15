@@ -1,7 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { bookAppointments, cancelAppointment, getAppointments } from '../reducer/UserSlice';
-axios.defaults.baseURL="https://prescripto-zdtq.vercel.app/";
+axios.defaults.baseURL="https://backend-anbw.onrender.com";
 export const asyncGetAppointments=(id)=>async(dispatch,getState)=>
 {
 try {
