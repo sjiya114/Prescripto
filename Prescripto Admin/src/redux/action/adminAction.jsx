@@ -2,7 +2,7 @@ import axios from 'axios';
 import { changeRole } from '../reducer/AdminSlice';
 import { adminDash, login } from '../reducer/AdminAuthSlice'
 import { logout } from '../reducer/AdminAuthSlice';
-axios.defaults.baseURL="https://prescripto-roan-nine.vercel.app";
+axios.defaults.baseURL="https://prescripto-roan-nine.vercel.app/api";
 import toast from 'react-hot-toast';
 export const asyncLoginAdmin=(data,navigate)=>async(dispatch,getState)=>
 {
