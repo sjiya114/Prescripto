@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { logout } from '../reducer/DoctorSlice';
 import { useNavigate } from 'react-router-dom';
 // const nav=useNavigate();
-axios.defaults.baseURL="https://prescripto-zdtq.vercel.app";
+axios.defaults.baseURL="https://prescripto-oecq3lni0-jiya-sharmas-projects-9f5b8682.vercel.app";
 //redux says if you want to make async funtion then you have to use high order function
 export const asyncgetDoctors=()=>async(dispatch,getState)=>
     {
