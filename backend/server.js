@@ -13,7 +13,7 @@ const { stripeWebhooks } = require('./controller/stripeWebhooks');
 app.use(express.json());
 app.use(cors());
 //API to listen to stripe webhook
-// app.post("/api/stripe",express.raw({type:"application/json"}),stripeWebhooks);
+app.post("/api/stripe",express.raw({type:"application/json"}),stripeWebhooks);
 app.use("/api/doctor",doctor);
 app.use("/api/admin",admin);
 app.use("/api/user",user);
