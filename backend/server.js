@@ -22,7 +22,8 @@ app.get("/api",(req,res)=>
     res.send("API is working");
 })
 const port=process.env.PORT || 5000;
-app.listen(port,()=>
-{
-    console.log("app start running on port "+port);
-})
+module.exports=app;
+// app.listen(port,()=>
+// {
+//     console.log("app start running on port "+port);
+// })
