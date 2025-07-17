@@ -17,7 +17,7 @@ app.use(cors());
 app.use("/api/doctor",doctor);
 app.use("/api/admin",admin);
 app.use("/api/user",user);
-app.get("/",(req,res)=>
+app.get("/api",(req,res)=>
 {
     res.send("API is working");
 })
