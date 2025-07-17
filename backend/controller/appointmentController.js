@@ -145,8 +145,8 @@ module.exports.stripePayment = async (req, res) => {
     const session = await stripeInstance.checkout.sessions.create({
         line_items,
         mode: "payment",
-        success_url: `${origin}/myappointments`,
-        cancel_url: `${origin}/myappointments`,
+        success_url: `${origin}/api/myappointments`,
+        cancel_url: `${origin}/api/myappointments`,
         metadata:
         {
             appointmentId: appointmentId
