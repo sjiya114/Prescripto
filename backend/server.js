@@ -10,10 +10,11 @@ const doctorschema=require('./model/doctor');
 const admin=require('./routes/admin');
 const user=require('./routes/user');
 const { stripeWebhooks } = require('./controller/stripeWebhooks');
+app.post("/api/stripe",express.raw({type:"application/json"}),stripeWebhooks);
 app.use(express.json());
 app.use(cors());
 //API to listen to stripe webhook
-app.post("/api/stripe",express.raw({type:"application/json"}),stripeWebhooks);
+
 app.use("/api/doctor",doctor);
 app.use("/api/admin",admin);
 app.use("/api/user",user);
