@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {useSelector} from 'react-redux';
 import { login,signup,auth, updateProfile, getUserProfile, logout } from "../reducer/UserSlice";
-axios.defaults.baseURL="https://prescripto-zdtq-17wag4361-jiya-sharmas-projects-9f5b8682.vercel.app";
+axios.defaults.baseURL="https://prescripto-zdtq.vercel.app/";
 export const asyncLoginUser=(data)=>async(dispatch,getState)=>
 {
 try {
