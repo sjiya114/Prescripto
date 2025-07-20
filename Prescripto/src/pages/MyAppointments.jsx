@@ -25,7 +25,7 @@ function MyAppointments() {
     const docinfo = doctors.find((doct) => doct._id === id);
     setDoc(docinfo);
     const docs = doctors.filter((doct) => {
-      return doct.speciality === doc.speciality
+      return doct.speciality === docinfo.speciality;
     });
     setSimilar(docs);
   }
@@ -108,7 +108,7 @@ function MyAppointments() {
 
  
   return (
-    <div className='mt-40 mx-20 flex flex-col space-y-6'>
+    <div className='mt-40 mx-20 max-md:mx-10 flex flex-col space-y-6'>
       <div className='flex flex-row max-md:flex-col space-x-4 space-y-6'>
         <div>
           <img src={doc.image} className='bg-indigo-200 hover:scale-120  rounded-lg border-blue-950 border-4' alt="image" />
@@ -127,7 +127,7 @@ function MyAppointments() {
         <h1 className='text-2xl font-bold text-gray-700'>
           Booking Slots
         </h1>
-        <div className='flex flex-row space-x-2 '>
+        <div className='flex flex-row flex-wrap space-y-2 space-x-2 '>
           {docSlots.length && docSlots.map((item,index)=>
           (
             <div onClick={()=>{setSlotIndex(index)}}  className={`flex ${slotIndex===index?'bg-blue-700 text-white':''}  cursor-pointer flex-col border-2 border-gray-600 rounded-2xl px-3 py-3`} key={index}>
@@ -137,21 +137,21 @@ function MyAppointments() {
           ))
           }
         </div>
-        <div className='flex  flex-row space-x-2 rounded-l-2xl '>
+        <div className='flex  flex-row flex-wrap gap-6 rounded-l-2xl '>
           {
             docSlots.length && docSlots[slotIndex].map((item,index)=>(
-              <p onClick={()=>{setSlotTime(item.time)}}   key={index} className={`text-blue-950 border-2   ${slotIndex===index?'bg-blue-700 text-white':''} border-blue-950 px-2 py-2 `}  > {item.time.toLowerCase()} </p>
+              <p onClick={()=>{setSlotTime(item.time)}}   key={index} className={`text-blue-950 border-2 rounded-lg   ${slotTime===item.time?'bg-blue-700 text-white':''} border-blue-950 cursor-pointer px-2 py-2 `}  > {item.time.toLowerCase()} </p>
             ))
           }
         </div>
         <div>
-         <button type='submit' className='bg-blue-950 text-white px-2 py-2 rounded-2xl'  >Book An Appointment</button>
+         <button type='submit' onClick={()=>{!localStorage.getItem("token") && navigate("/login") }}   className='bg-blue-950 text-white px-2 py-2 rounded-2xl'  >{localStorage.getItem("token")?'Book An Appointment':'Login to book apppointment'}</button>
         </div>
       </div>
       </form>
       <div>
          <Title title="Related Doctors" description="Simply browse through extensive list of doctors." />
-           <div className='flex flex-row flex-wrap space-x-6 space-y-10  mt-10  items-center justify-center rounded-lg'>
+           <div className='flex flex-row flex-wrap space-x-6 space-y-10  mt-10 max-md:flex-col    items-center justify-center rounded-lg'>
           {similar.map((doctor) => (
             <Link to={`/appointments/${doctor._id}`}>
             <div  className='flex flex-col cursor-pointer transition-transform animate-[wiggle_1s_ease-in-out_infinite]  rounded-lg border-4 shadow-2xl hover:scale-110 shadow-gray-400  border-gray-200'>

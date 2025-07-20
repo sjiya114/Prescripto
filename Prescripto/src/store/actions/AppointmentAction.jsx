@@ -60,6 +60,7 @@ try {
         {   
             dispatch(cancelAppointment(res.data.appointments));
             toast.success(res.data.message);
+            
         }
         else
         {
@@ -82,17 +83,17 @@ try {
         {   
             window.location.href=res.data.session;
             // toast.success(res.data.message);
-            navigate("/myappointments");
+            navigate("/");
         }
         else
         {
             toast.error(res.data.error);
-            navigate("/home");
+            navigate("/");
 
         } 
 } catch (error) {
     toast.error("error while making payment");
-     navigate("/home");
+     navigate("/");
 }
 }
 

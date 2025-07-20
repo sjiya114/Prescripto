@@ -19,7 +19,7 @@ function Header() {
        </div>
        <div className='w-1/2 max-md:w-full relative'>
         {/* right */}
-        <img src={assets.header_img} className='bottom-0 md:absolute' alt="" />
+        <img src={assets.header_img} className='bottom-0' alt="" />
        </div>
     </div>
   )
