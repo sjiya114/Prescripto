@@ -27,7 +27,7 @@ function Appointments() {
     }
     const makePayment=(id)=>
     {
-      dispatch(asyncMakePayment({userId:user._id,appointmentId:id}));
+      dispatch(asyncMakePayment({userId:user._id,appointmentId:id},navigate));
     }
   return (
    <>

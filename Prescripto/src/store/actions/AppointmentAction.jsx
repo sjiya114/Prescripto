@@ -69,7 +69,7 @@ try {
     toast.error("error while booking appointments");
 }
 }
-export const asyncMakePayment=(data)=>async(dispatch,getState)=>
+export const asyncMakePayment=(data,navigate)=>async(dispatch,getState)=>
 {
 try {
     const res=await axios.post("/user/makepayment",data,{
@@ -81,14 +81,18 @@ try {
         if(res.data.success)
         {   
             window.location.href=res.data.session;
-            toast.success(res.data.message);
+            // toast.success(res.data.message);
+            navigate("/myappointments");
         }
         else
         {
             toast.error(res.data.error);
+            navigate("/home");
+
         } 
 } catch (error) {
     toast.error("error while making payment");
+     navigate("/home");
 }
 }
 
