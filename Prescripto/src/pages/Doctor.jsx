@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import { asyncgetDoctors } from '../store/actions/DoctorAction';
-function Doctor() {
-  const [category, setCategory] = useState("all");
+function Doctor({speciality="all"}) {
+ 
   const specialists = ["General Physician", "Gynecologist", "Dermatologist", "Pediatricians",
     "Neurologist", "Gastroenterologist"];
     const navigate=useNavigate();
+    const {state}=useLocation(location.state || {});
+     const [category, setCategory] = useState(state===null?"all":state.speciality);
      const dispatch=useDispatch();
       const doctorState =useSelector((state)=>state.doctors);
         const [doctors,setDoctors]=useState(doctorState.doctors);

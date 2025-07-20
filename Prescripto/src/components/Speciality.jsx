@@ -9,7 +9,7 @@ function Speciality() { const navigate=useNavigate();
        <div className='flex flex-row flex-wrap  space-y-2 items-center justify-center space-x-8'>
          {specialityData.map((element,index)=>
         (
-            <div className='flex flex-col space-y-2'>
+            <div onClick={()=>{navigate("/doctor",{state:{speciality:element.speciality}}),scroll(0,0,0)}}   className='flex flex-col space-y-2'>
                 <img src={element.image} className='w-30 h-30  hover:-translate-y-6 ' alt="" />
                 <p>{element.speciality}</p>
             </div>

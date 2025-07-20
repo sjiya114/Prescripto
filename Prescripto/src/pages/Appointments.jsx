@@ -82,7 +82,7 @@ function Appointments() {
                {!doc.cancelled && <button onClick={()=>{!doc.payment && makePayment(doc._id)}}   className="border-gray-700 border-2 cursor-pointer rounded-md bg-blue-950 hover:bg-blue-600 text-white px-2 py-2">
                   {doc.payment?"Paid":"Pay Here"}
                 </button>}
-              {!doc.cancelled && <button  onClick={()=>navigate("/slip",{state:{userEmail:doc.userId.email,slotDate:doc.slotDate,slotTime:doc.slotTime,amount:doc.amount,rid:doc._id,pname:doc.userId.name,dname:doc.doctorId.name,age:doc.userId.age,gender:doc.userId.gender}})} className="border-gray-700 border-2 cursor-pointer rounded-md bg-blue-950 hover:bg-blue-600 text-white px-2 py-2">Go to Reciept</button>}
+              {!doc.cancelled && <button  onClick={()=>{navigate("/slip",{state:{userEmail:doc.userId.email,slotDate:doc.slotDate,slotTime:doc.slotTime,amount:doc.amount,rid:doc._id,pname:doc.userId.name,dname:doc.doctorId.name,age:doc.userId.age,gender:doc.userId.gender}}),scroll(0,0,0)}} className="border-gray-700 border-2 cursor-pointer rounded-md bg-blue-950 hover:bg-blue-600 text-white px-2 py-2">Go to Reciept</button>}
                 {!doc.payment && <button  onClick={()=>{!doc.cancelled && cancelAppointment(doc._id)}}    className="border-gray-700 border-2 cursor-pointer rounded-md px-2 hover:bg-red-900 hover:text-white py-2">
                   {doc.cancelled?"Cancelled":"Cancel Appointment"}
                 </button>}

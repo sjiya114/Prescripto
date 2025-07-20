@@ -20,7 +20,7 @@ function TopDoctors() {
         <Title title="Top Doctors to Book" description="Simply browse through our extensive list of trusted doctors" />
           <div className='flex flex-row flex-wrap space-x-6 space-y-10  mt-10  items-center justify-center rounded-lg'> 
          {doctorState.doctors.map((doctor)=>(
-            <div onClick={()=>{navigate(`/doctor/${doctor._id}`)}} className='flex flex-col transition-transform animate-[wiggle_1s_ease-in-out_infinite]  rounded-lg border-4 shadow-2xl hover:scale-110 shadow-blue-950  border-gray-200'>
+            <div onClick={()=>{navigate(`/appointments/${doctor._id}`),scroll(0,0,0)}} className='flex flex-col transition-transform animate-[wiggle_1s_ease-in-out_infinite]  rounded-lg border-4 shadow-2xl hover:scale-110 shadow-blue-950  border-gray-200'>
             <div>
               <img src={doctor.image} className='w-68 h-68 bg-gray-500 rounded-lg' alt="" />
             </div>
